@@ -1,4 +1,4 @@
-function [X,S] = cont(x0,ds,smax,sgn,tol,f,Df)
+function [X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,f,Df)
 %Numerical continuation of the curve defined by the equation f=0, 
 % f:R^{N+1}->R^N 
 %INPUT
@@ -12,9 +12,7 @@ function [X,S] = cont(x0,ds,smax,sgn,tol,f,Df)
 %     X: matrix (N+1)xM. The columns X(:,1),...,X(:,M) are the points on
 %     the curve.
 
-itmax = 20;
-%tol = 1.0e-12;
-s = 0.0;
+s = s0;
 S = [s];
 b = x0(:); b(1:end) = 0.0; b(end) = 1.0;
 
