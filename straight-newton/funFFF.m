@@ -1,5 +1,6 @@
 function fun=funFFF(x,Yg,pavsc,sload,uth,zth,k_w,k_pw,w0,k_q)
-
+n = length(x);
+fun = zeros(n,1);
 y1_2x=real(Yg(1));
 y1_2y=imag(Yg(1));
 y2_3x=real(Yg(2));
