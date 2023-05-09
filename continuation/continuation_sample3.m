@@ -16,7 +16,7 @@ Ibase2=Sbase/Ubase2/sqrt(3); %Line current
 Zbase2=Ubase2/Ibase2/sqrt(3); %Each phase
 
 %Transformer
-ztr=(0.016+j*1.92)/Zbase1;
+ztr=(0.016+1.92j)/Zbase1;
 
 y0_1=1/ztr;
 y0_12=1/ztr;
@@ -25,8 +25,8 @@ uth=1;
 zth=0.1*(sqrt(1/101)+j*sqrt(100/101));
 
 %Line
-zcable=(0.501+j*0.716)/Zbase1;
-zcable=(0.501+j*0.716)/Zbase1/5;
+zcable=(0.501+0.716j)/Zbase1;
+zcable=(0.501+0.716j)/Zbase1/5;
 %zcable=(0.510+j*0.366)/Zbase1;
 
 y1_2=1/(zcable*2.8);
@@ -120,7 +120,7 @@ sload=[sload2, sload3, sload4, sload5, sload7, sload8, sload9, sload10, sload11,
 %zsc=j*0.2*(1-(k-1)/100); %fault impedance
 
 %zsc=j*0.02;
-zsc=0.1j;
+zsc=0.02j;
 y12=1/zsc;
 
 %Initial approximation (?)
@@ -189,52 +189,26 @@ v1 = zeros(1, numVars);
 v1(end) = 1;
 dG = @(x)[dff(x); v1];
 
-tol=1.0e-12;
-itmax=30;
+tol=1.0e-13;
+itmax=10;
 [XK,DFk,res,it] = nnewton(x0,tol,itmax,G,dG);
 x0 = XK(:,end);
 
-sgn = 1.0;
+sgn = -1.0;
 s0 = 0.0;
-ds = 0.1;
-smax = 100;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
-plot(S,X(end,:),'-r','linewidth',1.5)
+ds = 0.5 ;
+smax = 500;
+%[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
+[X,S,DS,R] = contSSC(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
+plot(S,X(end,:),'.r','linewidth',1.5)
 xlabel('$s$','FontSize',12,'Interpreter','latex')
 ylabel('$\mathrm{Im}(y_{12}) = -1/|Z_{SC}|$','FontSize',12,'Interpreter','latex')
 hold on
-
-sgn = -1.0;
+sgn = 1.0;
 s0 = 0.0;
-ds = 0.1;
-smax = 100;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
-[y12XMin,idx] = min(X(end,:));
-
-X1 = X(:,1:idx-51);
-S1 = S(1:idx-51);
-
-x0 = X(:,idx-50);
-s0 = S(idx-50);
-smax = s0 + 10;
-ds = 0.001;
-%sgn = 1;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
-%plot(S,X(end,:),'go')
-%hold off
-
-X2 = X(:,1:end-1);
-S2 = S(1:end-1);
-x0 = X(:,end);
-s0 = S(end);
-smax = s0 + 100;
-ds = 0.1;
-sgn = -sgn;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
-xx = [X1(end,:),X2(end,:),X(end,:)];
-s = [S1,S2,S];
-plot(s,xx,'-b','linewidth',1.5);
+ds = 0.5 ;
+smax = 500;
+%[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
+[X,S,DS,R] = contSSC(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
+plot(S,X(end,:),'o','MarkerFaceColor','blue','MarkerSize',2)
 hold off
-
-
-

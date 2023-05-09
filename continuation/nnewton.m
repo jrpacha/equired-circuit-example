@@ -17,7 +17,7 @@ function [XK,DFk,res,it] = nnewton(x0,tol,itmax,fun,Dfun)
 % Meseguer, Alvaro: Fundamentals of Numerical Mathematics for Physicist
 % and Engineers. ED Wiley and Sons., 2020. Sec.6.1,p.214
 
-errormsg = 'nnewton: no convergence after %d iterates. tolk = %.5e\n';
+errormsg = '\tWarning: nnewton no convergence after %d iterates. tolk = %.5e\n';
    
 x0 = x0(:);
 xk = x0;
@@ -37,5 +37,5 @@ while it < itmax && tolk > tol
 end
 
 if it >= itmax && tolk > tol
-    warning(errormsg,itmax,tolk)
+    fprintf(errormsg,itmax,tolk)
 end

@@ -7,7 +7,7 @@ function [X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,f,Df)
 %  smax: maximum pseudo-arc length
 %   sgn: (+1 or -1) fixes the direction along the curve
 %     f: name of the function. f = 0 defines the curve
-%    Df: name of the function's partial derivatives' matrix name
+%    Df: function's partial derivatives' matrix name
 %OUTPUT
 %     X: matrix (N+1)xM. The columns X(:,1),...,X(:,M) are the points on
 %     the curve.
@@ -15,17 +15,6 @@ function [X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,f,Df)
 s = s0;
 S = [s];
 b = x0(:); b(1:end) = 0.0; b(end) = 1.0;
-
-%refine the initial approximation x0.
-%[value,idx] = max(abs(x0));
-%if idx == 1         
-%     G = @(x) [f(x); x(2)];    %This additional equation is specific for the
-%     DG = @(x) [Df(x); 0, 1];  %problem at hand: it fixes y = 0
-% else
-%     G = @(x) [f(x); x(1)];    %This additional equation is specific for the
-%     DG = @(x) [Df(x); 1, 0];  %problem at hand: it fixes x = 0
-% end
-% [XK,DFk,res,it] = nnewton(x0,tol,itmax,G,DG);
 
 %Find the tangent to the 1st. point
 %v = sgn*null(DFk(1:end-1,:));

@@ -1,6 +1,6 @@
 function df = dfunFFF(x,Yg,pavsc,sload,uth,zth,k_w,k_pw,w0,k_q)
 numVars = length(x);
-eps = 0.00001;
+eps = 1.0e-5;
 for i = 1:numVars
     h = x;
     h(i) = x(i) + eps;
