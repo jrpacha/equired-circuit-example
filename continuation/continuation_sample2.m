@@ -119,7 +119,8 @@ sload=[sload2, sload3, sload4, sload5, sload7, sload8, sload9, sload10, sload11,
 
 %zsc=j*0.2*(1-(k-1)/100); %fault impedance
 
-zsc=j*0.02;
+%zsc=j*0.02;
+zsc=0.02j;
 y12=1/zsc;
 
 %Initial approximation (?)
@@ -180,7 +181,6 @@ pavsc=[
 ff = @(x) funFFF(x, Yg, pavsc, sload, uth, zth, k_w, k_pw, w0, k_q);
 dff = @(x) dfunFFF(x,Yg,pavsc,sload,uth,zth,k_w,k_pw,w0,k_q);
 
-
 %Refine initial approach:
 %refine the initial approximation x0.
 G = @(x)[ff(x);x(end)-x0(end)];
@@ -194,11 +194,21 @@ itmax=30;
 [XK,DFk,res,it] = nnewton(x0,tol,itmax,G,dG);
 x0 = XK(:,end);
 
+sgn = 1.0;
+s0 = 0.0;
+ds = 0.1;
+smax = 100;
+[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
+plot(S,X(end,:),'-r','linewidth',1.5)
+xlabel('$s$','FontSize',12,'Interpreter','latex')
+ylabel('$\mathrm{Im}(y_{12}) = -1/|Z_{SC}|$','FontSize',12,'Interpreter','latex')
+hold on
+
 sgn = -1.0;
 s0 = 0.0;
 ds = 0.1;
 smax = 100;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff)
+[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
 [y12XMin,idx] = min(X(end,:));
 
 X1 = X(:,1:idx-51);
@@ -209,7 +219,7 @@ s0 = S(idx-50);
 smax = s0 + 10;
 ds = 0.001;
 %sgn = 1;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff)
+[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
 %plot(S,X(end,:),'go')
 %hold off
 
@@ -220,19 +230,11 @@ s0 = S(end);
 smax = s0 + 100;
 ds = 0.1;
 sgn = -sgn;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff)
+[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff);
 xx = [X1(end,:),X2(end,:),X(end,:)];
 s = [S1,S2,S];
 plot(s,xx,'-b','linewidth',1.5);
-hold on
-
-sgn = 1.0;
-s0 = 0.0;
-ds = 0.1;
-smax = 100;
-[X,S] = cont(x0,s0,ds,smax,sgn,tol,itmax,ff,dff)
-plot(S,X(end,:),'-r','linewidth',1.5)
-xlabel('$s$','FontSize',12,'Interpreter','latex')
-ylabel('$\mathrm{Im}(y_{12}) = -1/|Z_{SC}|$','FontSize',12,'Interpreter','latex')
 hold off
+
+
 
