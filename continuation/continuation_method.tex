@@ -25,7 +25,8 @@
 \SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
 \usepackage{psfrag}
 \usepackage{amsthm}
-\usepackage[catalan]{babel}
+\usepackage[english]{babel}
+\selectlanguage{english}
 %\selectlanguage{catalan}
 
 %\usepackage{eco}
@@ -148,23 +149,40 @@
  \caption{\label{fig:pseudo-arc}}
 \end{figure}
 
-\section{El mètode de continuació del pseudo-arc}\label{sec:pseudoArc}
-Volem trobar punts sobre la corba,
+\section{Arc step contuation method}\label{sec:pseudoArc}
+Our goal is to find points on the curve $\mathcal{C}\in\R^{n+1}$, defined
+implicitely by the $n$ equtions,
 \begin{displaymath}
-  \mathcal{C}=\left\{z\in\R^{n+1}: F(z) = 0\right\}
+       F(z) = 0,
 \end{displaymath}
-amb $F:\R^{n+1}\longrightarrow \R^{n}$. Suposem conegut 
-$z^{j}\in\R^{n+1}$, un punt \emph{regular} de la corba: 
-$F(z^{j}) = 0$,  
-$\mathop{\mathrm{rang}} DF(z^{j}) = n$. Per a trobar el punt següent,
-$z^{j+1}\in\mathcal{C}$, implementarem el mètode del 
-pseudo-arc (vegeu~\cite{Kuznetsov2004}, cap.~10, sec.~2) en el dos passos
-següents
+with $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth funciton. Let us assume that
+$z^{j}\in\R^{n+1}$, are a \emph{regular} point of the curve and an unitary
+vector tangent to the curve at that point respectively. Hence, on the one
+hand
+\begin{displaymath}
+  F\left(z^{j}\right) = 0\ \text{ ($z^{j}\in\mathcal{C}$), and }
+  \mathrm{rank}DF\left(z^{j}\right) = n\ \text{ ($z^{j}$ is a regular point of the
+  curve $\mathcal{C}$) }\
+\end{displaymath} 
+and, on the other hand
+\begin{displaymath}
+  \| v^{j}\| = 1\ \text{ ($v^{j}$ is unitary), and }
+  DF\left(v^{j}\right) v^{j} = 0\ \text{ ($v^{j}$ is tangent to the curve
+    $\mathcal{C}$ at $z^{j}$). }
+\end{displaymath}
+To find a next point on the curve, 
+$z^{j+1}\in\mathcal{C}$, we shall implement the so called \emph{pseudo-arc
+step} method (vegeu~\cite{Kuznetsov2004}, cap.~10, sec.~2), that can be
+summarised in the following two stages:  
 
 \begin{enumerate}[label = \emph{\arabic*.}]
-  \item \emph{Predicció:} agafarem $\hat{z}^{j+1} = z^{j} + h_{j} v^{j}$ com a
-  aproximació del nou punt $z^{j+1}$, on $h_{j}\in\R$ és el pas i
+  \item \emph{Prediciton:} we shall take $\hat{z}^{j+1} = z^{j} + h_{j}
+    v^{j}$ as an approximation of the new point of
+    $z^{j+1}$, where $h_{j}\in\R$ is the \emph{pseudo-arc} step (the
+    \emph{arc} in what follows), and 
     $v^{j}\in\R^{n+1}$, $\left\|v^{j}\right\| = 1$,
+    is the tangent vector to the $\mathcal{C}$ at point $z^{j}$, that will
+    be find as the solution of 
     és el vector tangent a la corba $\mathcal{C}$ al punt $z^{j}$, el qual
     determinarem resolent el \emph{sistema ampliat},  
     \begin{equation}\label{eq:appended_system}

@@ -1,16 +1,25 @@
 function [X,S,DS,R] = contSSC(x0,s0,ds0,smax,sgn,tol,itmax,f,Df)
 %Numerical continuation of the curve defined by the equation f=0, 
-% f:R^{N+1}->R^N 
+% f:R^{N+1}->R^N with pseudo-arc Step Size Control
 %INPUT
 %    x0: approximation of a point on the curve
-%    ds: pseudo-arc length (here fixed). TODO: adaptative step. Is it worth?
-%  smax: maximum pseudo-arc length
+%    s0: initial value of the pseudo-arc 
+%   ds0: initial value of the pseudo-arc step. The size of the arc step
+%        is adapted at each after some estimation of the curvature.
+%  smax: maximum pseudo-arc length, so the continuation is performed from
+%        s = s0 to s = smax.
 %   sgn: (+1 or -1) fixes the direction along the curve
 %     f: name of the function. f = 0 defines the curve
-%    Df: zfunction's partial derivatives' matrix name
+%    Df: function's partial derivatives' matrix name
 %OUTPUT
-%     X: matrix (N+1)xM. The columns X(:,1),...,X(:,M) are the points on
-%     the curve.
+%     X: (N+1)x M array. It's columns, X(:,1),...,X(:,M) are the points on
+%        the curve
+%     S: 1 x (N+1) array with the values of the pseudo-arc, s, at each step 
+%    DS: 1 x (N+1) array with the values of the pseudo-arc-step, ds, at
+%        each step
+    %     R: 1 x (N+1) array holding the residuals of the approximations
+%        computed for the points on the continuation curve. More precisely,
+%        R(i) = ||f(X(1,i),X(2,i),...,X(N+1,i))||, i = 1,...,M
 
 s = s0;
 S = [s];
@@ -63,7 +72,7 @@ while s < smax
             
             X = [X, XK(:,end)];            
             v0 = v;
-            R = [R,res(end)];
+            R = [R, res(end)];
 
             fprintf('\t - Step succeeded, res = %.5e\n',res(end))
 
