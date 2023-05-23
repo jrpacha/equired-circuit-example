@@ -17,7 +17,7 @@ function [X,S,DS,R] = contSSC(x0,s0,ds0,smax,sgn,tol,itmax,f,Df)
 %     S: 1 x (N+1) array with the values of the pseudo-arc, s, at each step 
 %    DS: 1 x (N+1) array with the values of the pseudo-arc-step, ds, at
 %        each step
-    %     R: 1 x (N+1) array holding the residuals of the approximations
+%     R: 1 x (N+1) array holding the residuals of the approximations
 %        computed for the points on the continuation curve. More precisely,
 %        R(i) = ||f(X(1,i),X(2,i),...,X(N+1,i))||, i = 1,...,M
 
