@@ -143,43 +143,109 @@
 %\maketitle
 %\tableofcontents
 %\maketitle
-\begin{figure}[!b]
+
+\section{Continuation method}\label{sec:pseudoArc}
+Our goal is to continue \emph{numerically} a curve $\mathcal{C}\subset\R^{n+1}$, defined
+implicitely by the equation
+%\begin{displaymath}
+       $F(z) = 0$,
+%\end{displaymath}
+being $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth function. Let us assume
+that $z^{j}\in\R^{n+1}$, is a \emph{regular} point of $\mathcal{C}$, so 
+%\begin{displaymath}
+$\left(z^{j}\right) = 0$, and
+  $\mathop{rank}DF\left(z^{j}\right) = n$.
+%\end{displaymath}
+Moreover, let $v^{j}\in\R^{n+1}$ be an unitary vector tangent to the curve
+$\mathcal{C}$ at the point $z^{j}$, so 
+%\begin{displaymath}
+  $\| v^{j}\| = 1$, and
+  $DF\left(z^{j}\right) v^{j} = 0$.
+%    $\mathcal{C}$ at point $z^{j}$). }
+%\end{displaymath}
+
+As described in~\cite{Kuznetsov2004} (see chap.~10, sect.~2), one can
+find a new point on the curve $z^{j+1}\in\mathcal{C}$, and a new (unitary) tangent
+vector, $v^{j+1}\in T_{z^{j+1}}\mathcal{C}$, $\left\|v^{j+1}\right\| = 1$.
+Then, if $z^{j+1}$ is a
+regular point of $\mathcal{C}$, find a another on $z^{j+2}\in\mathcal{C}$
+and a new tangent vector $v^{j+1}\in T_{z^{j+2}}\mathcal{C}$, and so on.   
+the corresponding tangent vector
+points on the curve can be approximated by means of the \emph{pseudo arc} method, following
+these three steps:
+\begin{enumerate}[label = \emph{\arabic*.}]
+  \item \emph{Step 1: Prediction.} Take $\hat{z}^{j+1} = z^{j} + h_{j}
+    v^{j}\in T_{z^{j}}\mathcal{C}$ as an approximation for another new
+    point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the \emph{pseudo
+    arc} length, and can be conveniently adapted at each step.
+  \item \emph{Step 2: Correction.} Refine the approximation $\hat{z}^{j+1}$
+    to find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$. 
+    curve, i.e., $z^{j+1}\in\mathcal{C}$. To this end, we add an 
+    extra condition: 
+    it is required that $z^{j+1}$ belongs to
+    the hyperplane orthogonal to the vector $v^{j}$ that holds
+    $\hat{z}^{j+1}$ (see Figure~\ref{fig:pseudo-arc}). In short, $z^{j+1}\in\hat{z}^{j+1} +
+    \langle v^{j}\rangle^{\perp}$. This last conditon can be formulated,
+    using the inner product, as
+    \begin{align*}
+      \left\langle v^{j}, z^{j+1} - \hat{z}^{j+1}\right\rangle &=  
+      \left\langle v^{j}, z^{j+1} - z^{j} - h_{j} v^{j}\right\rangle \\
+      &= \left\langle v^{j}, z^{j+1}\right\rangle -
+        \left\langle v^{j}, z^{j}\right\rangle - 
+        h_{j} \left\langle v^{j}, v^{j}\right\rangle\\
+      &=  \left\langle v^{j}, z^{j+1}\right\rangle -
+          \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0.
+    \end{align*}
+    Hence $z^{j+1}$ will be the solution of the nonlinear system,
+    \begin{displaymath}
+      \begin{split}%\label{eq:enlarged-system-corrector}
+        F(z) &= 0,\\
+        \left\langle v^{j}, z\right\rangle &= \left\langle v^{j},
+        z^{j}\right\rangle - h_{j}
+        \end{split}
+    \end{displaymath}
+    that can be solved by some iterative method (for example, Newton
+    method) taking form some the initial
+    approximation. $z = \hat{z}^{j+1}$ is usually a good choice.
+  %  
+  \item \emph{Step 2. Compute a new approximation.} For this we need a
+    tangent vector, $v^{j+1}$, to the curve $\mathcal{C}$ at the point
+    $z^{j+1}$ found at step one. To find $v^{j+1}$, first we solve the
+    \emph{enlarged} linear system
+    \begin{equation}\label{eq:enlarged-system-predictor}
+      \begin{split}
+      DF\left(z^{j+1}\right)v &= 0,\\
+      \left\langle v^{j}, v \right\rangle &= 1, 
+    \end{split}
+  \end{equation}
+  As it is remarked in~\cite{Kuznetsov2004}, the linar
+  system~\eqref{eq:enlarged-system-predictor} is nonsingular as long as 
+  $\mathcal{C}$ is a regular curve (i.e., provided, $\mathop{rank} DF(z) =
+  n$, $z\in\mathcal{C}$, and points $z^{j}$ and $z^{j+1}$ are close enough.
+  Moreover, if $v^{\ast}$ is the solution
+  of~\eqref{eq:enlarged-system-predictor}, then 
+  $\left\langle v^{j}, v^{\ast} \right\rangle = 1$, so the direction along the
+  curve is preserved. 
+
+  then normailise the solution
+%  
+\begin{figure}[!t]
   \centering
   \includegraphics[scale=1.2]{arcstep}
  \caption{\label{fig:pseudo-arc}}
 \end{figure}
 
-\section{Arc step contuation method}\label{sec:pseudoArc}
-Our goal is to find points on the curve $\mathcal{C}\in\R^{n+1}$, defined
-implicitely by the $n$ equtions,
-\begin{displaymath}
-       F(z) = 0,
-\end{displaymath}
-with $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth funciton. Let us assume that
-$z^{j}\in\R^{n+1}$, are a \emph{regular} point of the curve and an unitary
-vector tangent to the curve at that point respectively. Hence, on the one
-hand
-\begin{displaymath}
-  F\left(z^{j}\right) = 0\ \text{ ($z^{j}\in\mathcal{C}$), and }
-  \mathrm{rank}DF\left(z^{j}\right) = n\ \text{ ($z^{j}$ is a regular point of the
-  curve $\mathcal{C}$) }\
-\end{displaymath} 
-and, on the other hand
-\begin{displaymath}
-  \| v^{j}\| = 1\ \text{ ($v^{j}$ is unitary), and }
-  DF\left(v^{j}\right) v^{j} = 0\ \text{ ($v^{j}$ is tangent to the curve
-    $\mathcal{C}$ at $z^{j}$). }
-\end{displaymath}
-To find a next point on the curve, 
-$z^{j+1}\in\mathcal{C}$, we shall implement the so called \emph{pseudo-arc
-step} method (vegeu~\cite{Kuznetsov2004}, cap.~10, sec.~2), that can be
-summarised in the following two stages:  
 
-\begin{enumerate}[label = \emph{\arabic*.}]
+    $v^{j+1}$ must be a solution of the
+    equation $DF\left(z^{j+1}\right) v = 0$. Clearly, it is not unique, since
+      $\text{rank} DF\left(z^{j+1}\right) \le n$ 
+    equatons defines  
+  The second condition, in terms of the inner product, can be written as
+
   \item \emph{Prediciton:} we shall take $\hat{z}^{j+1} = z^{j} + h_{j}
     v^{j}$ as an approximation of the new point of
     $z^{j+1}$, where $h_{j}\in\R$ is the \emph{pseudo-arc} step (the
-    \emph{arc} in what follows), and 
+    \emph{step} in what follows), and 
     $v^{j}\in\R^{n+1}$, $\left\|v^{j}\right\| = 1$,
     is the tangent vector to the $\mathcal{C}$ at point $z^{j}$, that will
     be find as the solution of 
