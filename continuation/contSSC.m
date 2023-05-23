@@ -4,8 +4,8 @@ function [X,S,DS,R] = contSSC(x0,s0,ds0,smax,sgn,tol,itmax,f,Df)
 %INPUT
 %    x0: approximation of a point on the curve
 %    s0: initial value of the pseudo-arc 
-%   ds0: initial value of the pseudo-arc step. The size of the arc step
-%        is adapted at each after some estimation of the curvature.
+%   ds0: initial value of the pseudo-arc step. The size of ds0 is adapted 
+%        at each step after some estimation of the curvature.
 %  smax: maximum pseudo-arc length, so the continuation is performed from
 %        s = s0 to s = smax.
 %   sgn: (+1 or -1) fixes the direction along the curve
