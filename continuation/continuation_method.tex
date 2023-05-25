@@ -216,9 +216,9 @@ method, following these three stages:
           \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0,
     \end{align*}
     where $\langle\cdot, \cdot\rangle$ stands for the \emph{inner} (or dot)
-    product $\left\langle\xi, \eta\right\rangle := \xi_{1}\eta{1} + \dots +
-    \xi_{m}\eta_{r}$, for $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be the
-    solution of the nonlinear system,
+    product $\left\langle\xi, \eta\right\rangle := \xi_{1}\eta_{1} + \dots +
+    \xi_{m}\eta_{m}$, for $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be
+    given by the solution of the nonlinear system,
     \begin{displaymath}
       \begin{split}%\label{eq:enlarged-system-corrector}
         F(z) &= 0,\\
@@ -233,21 +233,18 @@ method, following these three stages:
   \item \emph{Step 2. Compute a new approximation.} For this we need a
     tangent vector, $v^{j+1}$, to the curve $\mathcal{C}$ at the point
     $z^{j+1}$ found at step one. To find $v^{j+1}$, first we solve the
-    \emph{enlarged} linear system
+    \emph{appended} linear system
     \begin{equation}\label{eq:enlarged-system-predictor}
       \begin{split}
       DF\left(z^{j+1}\right)v &= 0,\\
       \left\langle v^{j}, v \right\rangle &= 1. 
     \end{split}
   \end{equation}
-  We quote here to remarks pointed in the reference above: \emph{(i)} $\mathcal{C}$
-  is a regular curve,  the
-  system~\eqref{eq:enlarged-system-predictor} 
-  is nonsingular, provided the points $z^{j}$ and $z^{j+1}$ are close
-  enough, and \emph{(ii)} if we denote  $v^{\ast}$ the solution
-  of~\eqref{eq:enlarged-system-predictor}, then 
-  $\left\langle v^{j}, v^{\ast} \right\rangle = 1$, so the direction along the
-  curve is preserved. 
+  We note two points remarked in~\cite{Kuznetsov2004}. On the one hand, if
+  $\mathcal{C}$ is a regular curve and $z^{j}$, $z^{j+1}$ are close enough,
+  the system~\eqref{eq:enlarged-system-predictor} is nonsingular. On the
+  other hand,  the last equation assures that the direction along the curve
+  is preserved. 
 %  
 \begin{figure}[!t]
   \centering
