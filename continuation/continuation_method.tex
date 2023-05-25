@@ -1,0 +1,339 @@
+\documentclass[11pt,reqno,twoside]{article}
+
+\usepackage{calc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{lmodern}
+%\usepackage{literat}
+%\DeclareSymbolFont{operators}{OT1}{\familydefault}{m}{n}
+%\addtolength{\textwidth}{-2.2cm} % to emulate the original
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage[numbib]{tocbibind}
+\usepackage{wrapfig}
+\usepackage[font=small]{caption}
+%\usepackage{subcaption}
+\usepackage{subfigure}
+
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{enumitem}
+\SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
+\usepackage{psfrag}
+\usepackage{amsthm}
+\usepackage[english]{babel}
+\selectlanguage{english}
+%\selectlanguage{catalan}
+
+%\usepackage{eco}
+\usepackage[np,autolanguage]{numprint}
+  \npdecimalsign{\ensuremath{\cdot}}\npproductsign{\ensuremath{\times}}%
+\newcommand{\numold}[1]{\oldstylenums{\numprint{#1}}}
+
+\usepackage{ifpdf}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Llistat}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%\lstset{language=C, numbers=left, stepnumber=1,
+%         basicstyle=\small, numberstyle=\tiny, showspaces=flase}
+
+\lstset{language=matlab,basicstyle=\small}
+%, numbers=left, stepnumber=1,
+%         basicstyle=\small, numberstyle=\tiny, showspaces=flase}
+
+%\graphicspath{{./figures/}}
+
+%-------------
+%pdflatex,
+%Macros para producir hyperlinks
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png,.gif}
+\usepackage[pdftex,pagebackref,colorlinks,bookmarksnumbered,
+            breaklinks=true,
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=red,
+            urlcolor=magenta]{hyperref}
+\hypersetup{
+         pdfauthor   = {EquipDocentCalculNumeric},
+         pdftitle    = {Template for problems},
+         pdfsubject  = {Teaching},
+         %pdfpagemode = {FullScreen},
+         %pdfstartview = {},
+         colorlinks  = {true},
+         %bookmarks   = {true},
+         %pagebackref = {true},
+         bookmarksnumbered = {true},
+         %hyperindex  = {true}
+}
+%\pdfadjustspacing=1
+\usepackage{url}
+
+%Disseny de la pàgina
+%\usepackage{showframe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\geometry{
+  %papersize={210mm, 296mm},
+  a4paper,
+  left = 15mm,
+  right = 10mm,
+  top = 10mm,
+  head = 10mm,
+  foot = 10mm,
+  bottom = 20mm,
+  %includeall = false,
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\def\ds{\displaystyle}
+\def\rme{\mathrm{e}}
+\def\rmi{\mathrm{i}}
+\def\I{\mathrm{I}}
+\def\SVD{\textit{SVD} }
+\def\sign{\mathrm{sign}}
+\def\diag{\mathrm{diag}}
+\def\nuc{\mathrm{Nuc{}}}
+\def\rang{\mathrm{Rang{}}}
+\def\matlab{
+\href{https://es.mathworks.com/products/matlab.html}%
+{MATLAB\textsuperscript{\textregistered}}}
+
+\newcommand{\classe}[1]{\ensuremath{\mathcal{C}^{#1}}}
+\newcommand{\D}{\ensuremath{\mathcal{D}}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{main_thm}[thm]{Main Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\theoremstyle{remark}
+\newtheorem*{rem*}{Remarca}
+\newtheorem{rem}{Remarca}%[section]
+\newtheorem{nota}{Nota}
+\newtheorem{prob}[thm]{Exercici}
+
+\newcommand{\taylor}{\textsf{Taylor} }
+
+\newcommand{\notocsection}[1]{%
+    \refstepcounter{section}%
+    \section*{\thesection \quad #1}}%
+
+\def\refname{Referències}
+
+\begin{document}
+\title{}
+\author{}
+\date{}
+%\maketitle
+%\tableofcontents
+%\maketitle
+
+\section{Continuation method}\label{sec:pseudoArc} Our goal is to continue
+\emph{numerically} a curve $\mathcal{C}\subset\R^{n+1}$, defined
+implicitely by the equation
+%\begin{displaymath}
+       $F(z) = 0$,
+%\end{displaymath}
+being $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth function. Let us assume
+that $z^{j}\in\R^{n+1}$, is a \emph{regular} point of $\mathcal{C}$, so 
+%\begin{displaymath}
+$F\left(z^{j}\right) = 0$, and
+  $\mathop{rank}DF\left(z^{j}\right) = n$.
+%\end{displaymath}
+Moreover, let $v^{j}\in\R^{n+1}$ be an unitary vector tangent to the curve
+$\mathcal{C}$ at the point $z^{j}$, $v^{j}\in T_{z^{j}}\mathcal{C}$, so 
+%\begin{displaymath}
+  $\| v^{j}\| = 1$, and
+  $DF\left(z^{j}\right) v^{j} = 0$.
+%    $\mathcal{C}$ at point $z^{j}$). }
+%\end{displaymath}
+
+Then, it is possible to find a new point on the curve,
+$z^{j+1}\in\mathcal{C}$, and a new unitary tangent vector, to 
+$\mathcal{C}$ at $z^{j+1}$, $v^{j+1}\in T_{z^{j+1}}\mathcal{C}$,
+$\left\|v^{j+1}\right\| = 1$. If, on its turn, $z^{j+1}$ is a regular point
+of $\mathcal{C}$, then  one can look for yet another point on
+$\mathcal{C}$, $z^{j+2}\in\mathcal{C}$, and a new unitary tangent vector to
+$\mathcal{C}$ at $z^{j+2}$, $v^{j+2}\in T_{z^{j+2}}\mathcal{C}$,
+$\left\|v^{j+2}\right\| = 1$, and so on.
+
+Of course, there are several numerical methods to do this
+\emph{step-by-step} continuation of $\mathcal{C}$ from an inital point on
+the curve, $z^{j}\in\mathcal{C}$, and a (normalizsed) tangent direction at
+that point, $v^{j}\in T_{z^{j}}\mathcal{C}$. The one we outline here is the so
+called \emph{pseudo-arc continuation method} (see~\cite{Kuznetsov2004},
+Chap.~10, Sect.~2, for a complete description). In a nutshell, it consists
+in the three stages discussed below.
+
+Now, this process can be iterated until
+we reach a a point $z^{\ell}\in\mathcal{C}$ such that 
+eventually $\mathop{Rank} DF(z^{\ell}) < n$
+
+As described in~\cite{Kuznetsov2004} (see chap.~10, sect.~2),
+
+points on the curve can be approximated by means of the \emph{pseudo arc}
+method, following these three stages:
+\begin{enumerate}[label = \emph{\arabic*.}]
+  \item \emph{Stage 1: Prediction.} Take $\hat{z}^{j+1} = z^{j} + h_{j}
+    v^{j}\in z^{j} + \left\langle v^{j}\right\rangle$ as an approximation
+    for another new point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the
+    pseudo-arc length, and can be conveniently adapted at each step. \item
+%%
+    \emph{Stage 2: Correction.} Refine the approximation $\hat{z}^{j+1}$ to
+    find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$.
+    However, as the system F(z) = 0 has $n$ equations and $n+1$ unknowns
+    $z_{1}, z_{2},\dots,z_{n},z_{n+1}$, we need to ask for an additional
+    condition: in particular, we shall require that 
+    $z^{j+1}\in\hat{z}^{j+1} +\left\langle v^{j}\right\rangle^{\perp}$, i.e., that
+    $z^{j+1}$ belongs to
+    the hyperplane orthogonal to the vector $v^{j}$ that holds
+    $\hat{z}^{j+1}$
+    (see Figure~\ref{fig:pseudo-arc}). The  
+    corresponding equation con be formulated as
+    \begin{align*}
+      \left\langle v^{j}, z^{j+1} - \hat{z}^{j+1}\right\rangle &=  
+      \left\langle v^{j}, z^{j+1} - z^{j} - h_{j} v^{j}\right\rangle \\
+      &= \left\langle v^{j}, z^{j+1}\right\rangle -
+        \left\langle v^{j}, z^{j}\right\rangle - 
+        h_{j} \left\langle v^{j}, v^{j}\right\rangle\\
+      &=  \left\langle v^{j}, z^{j+1}\right\rangle -
+          \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0,
+    \end{align*}
+    where $\langle\cdot, \cdot\rangle$ stands for the \emph{inner} (or dot)
+    product $\left\langle\xi, \eta\right\rangle := \xi_{1}\eta{1} + \dots +
+    \xi_{m}\eta_{r}$, for $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be the
+    solution of the nonlinear system,
+    \begin{displaymath}
+      \begin{split}%\label{eq:enlarged-system-corrector}
+        F(z) &= 0,\\
+        \left\langle v^{j}, z\right\rangle &= \left\langle v^{j},
+        z^{j}\right\rangle - h_{j}
+        \end{split}
+    \end{displaymath}
+    that can be solved by some iterative method (for example, Newton
+    method) taking form some the initial
+    approximation. $z = \hat{z}^{j+1}$ is usually a good choice.
+  %  
+  \item \emph{Step 2. Compute a new approximation.} For this we need a
+    tangent vector, $v^{j+1}$, to the curve $\mathcal{C}$ at the point
+    $z^{j+1}$ found at step one. To find $v^{j+1}$, first we solve the
+    \emph{enlarged} linear system
+    \begin{equation}\label{eq:enlarged-system-predictor}
+      \begin{split}
+      DF\left(z^{j+1}\right)v &= 0,\\
+      \left\langle v^{j}, v \right\rangle &= 1. 
+    \end{split}
+  \end{equation}
+  We quote here to remarks pointed in the reference above: \emph{(i)} $\mathcal{C}$
+  is a regular curve,  the
+  system~\eqref{eq:enlarged-system-predictor} 
+  is nonsingular, provided the points $z^{j}$ and $z^{j+1}$ are close
+  enough, and \emph{(ii)} if we denote  $v^{\ast}$ the solution
+  of~\eqref{eq:enlarged-system-predictor}, then 
+  $\left\langle v^{j}, v^{\ast} \right\rangle = 1$, so the direction along the
+  curve is preserved. 
+%  
+\begin{figure}[!t]
+  \centering
+  \includegraphics[scale=1.2]{arcstep}
+ \caption{\label{fig:pseudo-arc}}
+\end{figure}
+
+
+    $v^{j+1}$ must be a solution of the
+    equation $DF\left(z^{j+1}\right) v = 0$. Clearly, it is not unique, since
+      $\text{rank} DF\left(z^{j+1}\right) \le n$ 
+    equatons defines  
+  The second condition, in terms of the inner product, can be written as
+
+  \item \emph{Prediciton:} we shall take $\hat{z}^{j+1} = z^{j} + h_{j}
+    v^{j}$ as an approximation of the new point of
+    $z^{j+1}$, where $h_{j}\in\R$ is the \emph{pseudo-arc} step (the
+    \emph{step} in what follows), and 
+    $v^{j}\in\R^{n+1}$, $\left\|v^{j}\right\| = 1$,
+    is the tangent vector to the $\mathcal{C}$ at point $z^{j}$, that will
+    be find as the solution of 
+    és el vector tangent a la corba $\mathcal{C}$ al punt $z^{j}$, el qual
+    determinarem resolent el \emph{sistema ampliat},  
+    \begin{equation}\label{eq:appended_system}
+      \begin{split}
+      DF\left(z^{j}\right)v &= 0,\\
+      \left\langle v^{j-1}, v \right\rangle &= 1, 
+    \end{split}
+  \end{equation}
+    on $v^{j-1}\in\R^{n+1}$, $\left\|v^{j-1}\right\|=1$, és el vector
+    tangent a la corba $\mathcal{C}$ al punt $z^{j-1}$, tots dos ($v^{j-1}$
+    i $z^{j-1}$) prèviament calculats. Com s'observa
+    a~\cite{Kuznetsov2004}:
+    \begin{enumerate}[label = (\roman*)] 
+      \item El sistema lineal~\eqref{eq:appended_system} és no singular si
+	$\mathcal{C}$ és una corba regular (i.e., si
+	$\mathop{\mathrm{rang}} DF(z) = n$, $z\in\mathcal{C}$) i els punts
+	$z^{j-1}$ i $z^{j}$ estan suficientment a prop.
+      \item La solució $v^{\ast}\in\R^{n+1}$ satisfà la condició
+	  $\left\langle v^{j-1}, v^{\ast}\right\rangle = 1$, per tant es preserva la
+	  direcció al llarg de la corba.
+     \end{enumerate}
+     Per últim, normalitzem per tenir $v^{j} =
+     v^{\ast}/\left\|v^{\ast}\right\|$. \emph{Nota:} a l'inici, quan $j =
+     0$, no podrem
+     escriure el sistema \eqref{eq:appended_system}, sinó que resoldrem el
+     sistema $n\times n$ que s'obté de seleccionar $n$ columnes linealment
+     independents
+     (siguin les columnes $1,2,\dots,i-1,i+1,\dots,n,n+1$) de
+     $DF(z^{j})$ a la primera equació 
+     de~\eqref{eq:appended_system} i fixar 
+     $v_{i} = 1$. D'aquesta manera trobarem un vector $v^{\ast}\in\R^{n}$, 
+     $v^{\ast}_{i} = 1$, t.q.~$DF(z^{0})v^{\ast} = 0$. Llavors $v^{0} =
+     \pm v^{\ast}/\left\|v^{\ast}\right\|$, on la tria del signe determinarà
+     la direcció en què es continua la corba.
+
+       \item\emph{Correcció}. Per a ``refinar'' el valor aproximat
+	 $\hat{z}^{j+1} = z^{j}+h_{j}v^{j}$ del pas predictiu pel mètode de
+	 Newton i determinar el nou punt sobre la corba,
+	 $z^{j+1}\in\mathcal{C}$, s'ha d'afegir alguna equació addicional
+	 al sistema $F(z) = 0$. Al mètode del pesudo-arc, s'imposa que
+	 $z^{j+1}\in\hat{z}^{j+1}+ \left\langle
+	 v^{j}\right\rangle^{\perp}$; això és, que el punt $z^{j+1}$
+	 pertanyi també al hiperplà perpendicular al vector $v^{j}$ que
+	 conté $\hat{z}^{j+1}$. Usant el producte escalar aquesta condició
+	 geomètrica s'escriu com, 
+     \begin{displaymath}
+       \left\langle z^{j+1} - \hat{z}^{j+1}, v^{j}\right\rangle =
+       \left\langle z^{j+1} - z^{j} - h_{j} v^{j}, v^{j}\right\rangle =
+       \left\langle z^{j+1} - z^{j}, v^{j}\right\rangle - h_{j} = 0
+     \end{displaymath}
+     (vegeu la figura~\ref{fig:pseudo-arc}). Aleshores aplicarem el mètode de
+     Newton al sistema no lineal 
+     \begin{align*}
+       F(z) &=0,\\
+       \left\langle z - z^{j}, v^{j}\right\rangle &= h_{j},
+     \end{align*}
+     prenent $z^{(0)} =\hat{z}^{j+1}$ com a aproximació inicial.
+\end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{references}
+%\nocite{*}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "manual"
+%%% End:
