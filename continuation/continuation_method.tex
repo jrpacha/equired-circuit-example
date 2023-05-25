@@ -144,8 +144,8 @@
 %\tableofcontents
 %\maketitle
 
-\section{Continuation method}\label{sec:pseudoArc}
-Our goal is to continue \emph{numerically} a curve $\mathcal{C}\subset\R^{n+1}$, defined
+\section{Continuation method}\label{sec:pseudoArc} Our goal is to continue
+\emph{numerically} a curve $\mathcal{C}\subset\R^{n+1}$, defined
 implicitely by the equation
 %\begin{displaymath}
        $F(z) = 0$,
@@ -153,40 +153,59 @@ implicitely by the equation
 being $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth function. Let us assume
 that $z^{j}\in\R^{n+1}$, is a \emph{regular} point of $\mathcal{C}$, so 
 %\begin{displaymath}
-$\left(z^{j}\right) = 0$, and
+$F\left(z^{j}\right) = 0$, and
   $\mathop{rank}DF\left(z^{j}\right) = n$.
 %\end{displaymath}
 Moreover, let $v^{j}\in\R^{n+1}$ be an unitary vector tangent to the curve
-$\mathcal{C}$ at the point $z^{j}$, so 
+$\mathcal{C}$ at the point $z^{j}$, $v^{j}\in T_{z^{j}}\mathcal{C}$, so 
 %\begin{displaymath}
   $\| v^{j}\| = 1$, and
   $DF\left(z^{j}\right) v^{j} = 0$.
 %    $\mathcal{C}$ at point $z^{j}$). }
 %\end{displaymath}
 
-As described in~\cite{Kuznetsov2004} (see chap.~10, sect.~2), one can
-find a new point on the curve $z^{j+1}\in\mathcal{C}$, and a new (unitary) tangent
-vector, $v^{j+1}\in T_{z^{j+1}}\mathcal{C}$, $\left\|v^{j+1}\right\| = 1$.
-Then, if $z^{j+1}$ is a
-regular point of $\mathcal{C}$, find a another on $z^{j+2}\in\mathcal{C}$
-and a new tangent vector $v^{j+1}\in T_{z^{j+2}}\mathcal{C}$, and so on.   
-the corresponding tangent vector
-points on the curve can be approximated by means of the \emph{pseudo arc} method, following
-these three steps:
+Then, it is possible to find a new point on the curve,
+$z^{j+1}\in\mathcal{C}$, and a new unitary tangent vector, to 
+$\mathcal{C}$ at $z^{j+1}$, $v^{j+1}\in T_{z^{j+1}}\mathcal{C}$,
+$\left\|v^{j+1}\right\| = 1$. If, on its turn, $z^{j+1}$ is a regular point
+of $\mathcal{C}$, then  one can look for yet another point on
+$\mathcal{C}$, $z^{j+2}\in\mathcal{C}$, and a new unitary tangent vector to
+$\mathcal{C}$ at $z^{j+2}$, $v^{j+2}\in T_{z^{j+2}}\mathcal{C}$,
+$\left\|v^{j+2}\right\| = 1$, and so on.
+
+Of course, there are several numerical methods to do this
+\emph{step-by-step} continuation of $\mathcal{C}$ from an inital point on
+the curve, $z^{j}\in\mathcal{C}$, and a (normalizsed) tangent direction at
+that point, $v^{j}\in T_{z^{j}}\mathcal{C}$. The one we outline here is the so
+called \emph{pseudo-arc continuation method} (see~\cite{Kuznetsov2004},
+Chap.~10, Sect.~2, for a complete description). In a nutshell, it consists
+in the three stages discussed below.
+
+Now, this process can be iterated until
+we reach a a point $z^{\ell}\in\mathcal{C}$ such that 
+eventually $\mathop{Rank} DF(z^{\ell}) < n$
+
+As described in~\cite{Kuznetsov2004} (see chap.~10, sect.~2),
+
+points on the curve can be approximated by means of the \emph{pseudo arc}
+method, following these three stages:
 \begin{enumerate}[label = \emph{\arabic*.}]
-  \item \emph{Step 1: Prediction.} Take $\hat{z}^{j+1} = z^{j} + h_{j}
-    v^{j}\in T_{z^{j}}\mathcal{C}$ as an approximation for another new
-    point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the \emph{pseudo
-    arc} length, and can be conveniently adapted at each step.
-  \item \emph{Step 2: Correction.} Refine the approximation $\hat{z}^{j+1}$
-    to find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$. 
-    curve, i.e., $z^{j+1}\in\mathcal{C}$. To this end, we add an 
-    extra condition: 
-    it is required that $z^{j+1}$ belongs to
+  \item \emph{Stage 1: Prediction.} Take $\hat{z}^{j+1} = z^{j} + h_{j}
+    v^{j}\in z^{j} + \left\langle v^{j}\right\rangle$ as an approximation
+    for another new point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the
+    pseudo-arc length, and can be conveniently adapted at each step. \item
+%%
+    \emph{Stage 2: Correction.} Refine the approximation $\hat{z}^{j+1}$ to
+    find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$.
+    However, as the system F(z) = 0 has $n$ equations and $n+1$ unknowns
+    $z_{1}, z_{2},\dots,z_{n},z_{n+1}$, we need to ask for an additional
+    condition: in particular, we shall require that 
+    $z^{j+1}\in\hat{z}^{j+1} +\left\langle v^{j}\right\rangle^{\perp}$, i.e., that
+    $z^{j+1}$ belongs to
     the hyperplane orthogonal to the vector $v^{j}$ that holds
-    $\hat{z}^{j+1}$ (see Figure~\ref{fig:pseudo-arc}). In short, $z^{j+1}\in\hat{z}^{j+1} +
-    \langle v^{j}\rangle^{\perp}$. This last conditon can be formulated,
-    using the inner product, as
+    $\hat{z}^{j+1}$
+    (see Figure~\ref{fig:pseudo-arc}). The  
+    corresponding equation con be formulated as
     \begin{align*}
       \left\langle v^{j}, z^{j+1} - \hat{z}^{j+1}\right\rangle &=  
       \left\langle v^{j}, z^{j+1} - z^{j} - h_{j} v^{j}\right\rangle \\
@@ -194,9 +213,12 @@ these three steps:
         \left\langle v^{j}, z^{j}\right\rangle - 
         h_{j} \left\langle v^{j}, v^{j}\right\rangle\\
       &=  \left\langle v^{j}, z^{j+1}\right\rangle -
-          \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0.
+          \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0,
     \end{align*}
-    Hence $z^{j+1}$ will be the solution of the nonlinear system,
+    where $\langle\cdot, \cdot\rangle$ stands for the \emph{inner} (or dot)
+    product $\left\langle\xi, \eta\right\rangle := \xi_{1}\eta{1} + \dots +
+    \xi_{m}\eta_{r}$, for $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be the
+    solution of the nonlinear system,
     \begin{displaymath}
       \begin{split}%\label{eq:enlarged-system-corrector}
         F(z) &= 0,\\
@@ -215,19 +237,17 @@ these three steps:
     \begin{equation}\label{eq:enlarged-system-predictor}
       \begin{split}
       DF\left(z^{j+1}\right)v &= 0,\\
-      \left\langle v^{j}, v \right\rangle &= 1, 
+      \left\langle v^{j}, v \right\rangle &= 1. 
     \end{split}
   \end{equation}
-  As it is remarked in~\cite{Kuznetsov2004}, the linar
-  system~\eqref{eq:enlarged-system-predictor} is nonsingular as long as 
-  $\mathcal{C}$ is a regular curve (i.e., provided, $\mathop{rank} DF(z) =
-  n$, $z\in\mathcal{C}$, and points $z^{j}$ and $z^{j+1}$ are close enough.
-  Moreover, if $v^{\ast}$ is the solution
+  We quote here to remarks pointed in the reference above: \emph{(i)} $\mathcal{C}$
+  is a regular curve,  the
+  system~\eqref{eq:enlarged-system-predictor} 
+  is nonsingular, provided the points $z^{j}$ and $z^{j+1}$ are close
+  enough, and \emph{(ii)} if we denote  $v^{\ast}$ the solution
   of~\eqref{eq:enlarged-system-predictor}, then 
   $\left\langle v^{j}, v^{\ast} \right\rangle = 1$, so the direction along the
   curve is preserved. 
-
-  then normailise the solution
 %  
 \begin{figure}[!t]
   \centering
