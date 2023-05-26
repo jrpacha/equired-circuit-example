@@ -180,24 +180,18 @@ that point, $v^{j}\in T_{z^{j}}\mathcal{C}$. The one we outline here is the so
 called \emph{pseudo-arc continuation method} (see~\cite{Kuznetsov2004},
 Chap.~10, Sect.~2, for a complete description). In a nutshell, it consists
 in the three stages discussed below.
-
-Now, this process can be iterated until
-we reach a a point $z^{\ell}\in\mathcal{C}$ such that 
-eventually $\mathop{Rank} DF(z^{\ell}) < n$
-
-As described in~\cite{Kuznetsov2004} (see chap.~10, sect.~2),
-
-points on the curve can be approximated by means of the \emph{pseudo arc}
-method, following these three stages:
-\begin{enumerate}[label = \emph{\arabic*.}]
-  \item \emph{Stage 1: Prediction.} Take $\hat{z}^{j+1} = z^{j} + h_{j}
+%\begin{enumerate}[label = \emph{\arabic*.}]
+%  \begin{description}  
+  \paragraph{Stage $1$: Prediction.}
+    Take $\hat{z}^{j+1} = z^{j} + h_{j}
     v^{j}\in z^{j} + \left\langle v^{j}\right\rangle$ as an approximation
     for another new point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the
-    pseudo-arc length, and can be conveniently adapted at each step. \item
+    pseudo-arc length, and can be conveniently adapted at each step. 
 %%
-    \emph{Stage 2: Correction.} Refine the approximation $\hat{z}^{j+1}$ to
+  \paragraph{Stage $2$: Correcton.}
+ Refine the approximation $\hat{z}^{j+1}$ to
     find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$.
-    However, as the system F(z) = 0 has $n$ equations and $n+1$ unknowns
+    However, as the system $F(z) = 0$ has $n$ equations and $n+1$ unknowns
     $z_{1}, z_{2},\dots,z_{n},z_{n+1}$, we need to ask for an additional
     condition: in particular, we shall require that 
     $z^{j+1}\in\hat{z}^{j+1} +\left\langle v^{j}\right\rangle^{\perp}$, i.e., that
@@ -217,7 +211,7 @@ method, following these three stages:
     \end{align*}
     where $\langle\cdot, \cdot\rangle$ stands for the \emph{inner} (or dot)
     product $\left\langle\xi, \eta\right\rangle := \xi_{1}\eta_{1} + \dots +
-    \xi_{m}\eta_{m}$, for $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be
+    \xi_{m}\eta_{m}$, $\xi, \eta\in\R^{m}$. Hence $z^{j+1}$ will be
     given by the solution of the nonlinear system,
     \begin{displaymath}
       \begin{split}%\label{eq:enlarged-system-corrector}
@@ -227,103 +221,47 @@ method, following these three stages:
         \end{split}
     \end{displaymath}
     that can be solved by some iterative method (for example, Newton
-    method) taking form some the initial
-    approximation. $z = \hat{z}^{j+1}$ is usually a good choice.
+    method) taking as initial approximation. $z^{(0)} = \hat{z}^{j+1}$. 
   %  
-  \item \emph{Step 2. Compute a new approximation.} For this we need a
-    tangent vector, $v^{j+1}$, to the curve $\mathcal{C}$ at the point
-    $z^{j+1}$ found at step one. To find $v^{j+1}$, first we solve the
-    \emph{appended} linear system
-    \begin{equation}\label{eq:enlarged-system-predictor}
+\paragraph{Stage $3$: Tangent vector.} To find the tangent vector to the
+curve at the new point $z^{j+1}\in\mathcal{C}$ found at Stage
+$2$, $v^{j+1}\in  T_{z^{j+1}}\mathcal{C}$, first we solve the
+$(n+1)$-dimensional linear system
+    \begin{equation}\label{eq:appended-system}
       \begin{split}
       DF\left(z^{j+1}\right)v &= 0,\\
       \left\langle v^{j}, v \right\rangle &= 1. 
     \end{split}
   \end{equation}
-  We note two points remarked in~\cite{Kuznetsov2004}. On the one hand, if
-  $\mathcal{C}$ is a regular curve and $z^{j}$, $z^{j+1}$ are close enough,
-  the system~\eqref{eq:enlarged-system-predictor} is nonsingular. On the
-  other hand,  the last equation assures that the direction along the curve
-  is preserved. 
-%  
+  As it is pointed out in~\cite{Kuznetsov2004}:
+  \begin{enumerate}[label = \emph{(\roman*)}]
+    \item If $\mathcal{C}$ is a regular curve and $z^{j}$, $z^{j+1}$ are close
+  enough, the system~\eqref{eq:appended-system} is nonsingular.
+    \item The solution, $v^{\ast}\in\R^{n+1}$,
+  of~\eqref{eq:appended-system} satisfies $\left\langle v^{j},
+  v^{\ast}\right\rangle = 1$, so the direction along the curve is
+  preserved.
+\end{enumerate}
+Next, we normalize. If $v^{\ast}\in\R^{n+1}$ denotes the solution
+of~\eqref{eq:appended-system}, we divide by its norm, so $v^{j+1} =
+v^{\ast}/\left\|v^{\ast}\right\|$. This is the tangent vector we look for. 
+%\end{description}
+
 \begin{figure}[!t]
   \centering
-  \includegraphics[scale=1.2]{arcstep}
- \caption{\label{fig:pseudo-arc}}
+  \includegraphics[scale=1.0]{arcstep}
+  \caption{We add an extra condition: $z^{j+1}\in
+  \hat{z}^{ji+1} + \left\langle v^{j}\right\rangle^{\perp}$.
+See~\cite{Kuznetsov2004}, Figure 10.6(b).\label{fig:pseudo-arc}}
 \end{figure}
 
-
-    $v^{j+1}$ must be a solution of the
-    equation $DF\left(z^{j+1}\right) v = 0$. Clearly, it is not unique, since
-      $\text{rank} DF\left(z^{j+1}\right) \le n$ 
-    equatons defines  
-  The second condition, in terms of the inner product, can be written as
-
-  \item \emph{Prediciton:} we shall take $\hat{z}^{j+1} = z^{j} + h_{j}
-    v^{j}$ as an approximation of the new point of
-    $z^{j+1}$, where $h_{j}\in\R$ is the \emph{pseudo-arc} step (the
-    \emph{step} in what follows), and 
-    $v^{j}\in\R^{n+1}$, $\left\|v^{j}\right\| = 1$,
-    is the tangent vector to the $\mathcal{C}$ at point $z^{j}$, that will
-    be find as the solution of 
-    és el vector tangent a la corba $\mathcal{C}$ al punt $z^{j}$, el qual
-    determinarem resolent el \emph{sistema ampliat},  
-    \begin{equation}\label{eq:appended_system}
-      \begin{split}
-      DF\left(z^{j}\right)v &= 0,\\
-      \left\langle v^{j-1}, v \right\rangle &= 1, 
-    \end{split}
-  \end{equation}
-    on $v^{j-1}\in\R^{n+1}$, $\left\|v^{j-1}\right\|=1$, és el vector
-    tangent a la corba $\mathcal{C}$ al punt $z^{j-1}$, tots dos ($v^{j-1}$
-    i $z^{j-1}$) prèviament calculats. Com s'observa
-    a~\cite{Kuznetsov2004}:
-    \begin{enumerate}[label = (\roman*)] 
-      \item El sistema lineal~\eqref{eq:appended_system} és no singular si
-	$\mathcal{C}$ és una corba regular (i.e., si
-	$\mathop{\mathrm{rang}} DF(z) = n$, $z\in\mathcal{C}$) i els punts
-	$z^{j-1}$ i $z^{j}$ estan suficientment a prop.
-      \item La solució $v^{\ast}\in\R^{n+1}$ satisfà la condició
-	  $\left\langle v^{j-1}, v^{\ast}\right\rangle = 1$, per tant es preserva la
-	  direcció al llarg de la corba.
-     \end{enumerate}
-     Per últim, normalitzem per tenir $v^{j} =
-     v^{\ast}/\left\|v^{\ast}\right\|$. \emph{Nota:} a l'inici, quan $j =
-     0$, no podrem
-     escriure el sistema \eqref{eq:appended_system}, sinó que resoldrem el
-     sistema $n\times n$ que s'obté de seleccionar $n$ columnes linealment
-     independents
-     (siguin les columnes $1,2,\dots,i-1,i+1,\dots,n,n+1$) de
-     $DF(z^{j})$ a la primera equació 
-     de~\eqref{eq:appended_system} i fixar 
-     $v_{i} = 1$. D'aquesta manera trobarem un vector $v^{\ast}\in\R^{n}$, 
-     $v^{\ast}_{i} = 1$, t.q.~$DF(z^{0})v^{\ast} = 0$. Llavors $v^{0} =
-     \pm v^{\ast}/\left\|v^{\ast}\right\|$, on la tria del signe determinarà
-     la direcció en què es continua la corba.
-
-       \item\emph{Correcció}. Per a ``refinar'' el valor aproximat
-	 $\hat{z}^{j+1} = z^{j}+h_{j}v^{j}$ del pas predictiu pel mètode de
-	 Newton i determinar el nou punt sobre la corba,
-	 $z^{j+1}\in\mathcal{C}$, s'ha d'afegir alguna equació addicional
-	 al sistema $F(z) = 0$. Al mètode del pesudo-arc, s'imposa que
-	 $z^{j+1}\in\hat{z}^{j+1}+ \left\langle
-	 v^{j}\right\rangle^{\perp}$; això és, que el punt $z^{j+1}$
-	 pertanyi també al hiperplà perpendicular al vector $v^{j}$ que
-	 conté $\hat{z}^{j+1}$. Usant el producte escalar aquesta condició
-	 geomètrica s'escriu com, 
-     \begin{displaymath}
-       \left\langle z^{j+1} - \hat{z}^{j+1}, v^{j}\right\rangle =
-       \left\langle z^{j+1} - z^{j} - h_{j} v^{j}, v^{j}\right\rangle =
-       \left\langle z^{j+1} - z^{j}, v^{j}\right\rangle - h_{j} = 0
-     \end{displaymath}
-     (vegeu la figura~\ref{fig:pseudo-arc}). Aleshores aplicarem el mètode de
-     Newton al sistema no lineal 
-     \begin{align*}
-       F(z) &=0,\\
-       \left\langle z - z^{j}, v^{j}\right\rangle &= h_{j},
-     \end{align*}
-     prenent $z^{(0)} =\hat{z}^{j+1}$ com a aproximació inicial.
-\end{enumerate}
+Now, the process can be iterated using the output of Stage $3$, the tangent
+vector $v^{j+1}$ to feed Stage $1$ and find a another point close to the
+curve  $\mathcal{C}$ and so on. If for the new computed point curve $C$,
+and so on. If at Stage $2$, $\mathop{Rank} DF\left(z^{k}\right) < n$, for
+the new computed point, $z^{k}\in\mathcal{C}$, then 
+ one has to stop the process and analyse for the possible
+appearing of branches (bifurcations).
 
 \bibliographystyle{plain}
 \bibliography{references}
