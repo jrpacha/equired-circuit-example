@@ -151,13 +151,13 @@ implicitely by the equation
        $F(z) = 0$,
 %\end{displaymath}
 being $F:\R^{n+1}\longrightarrow \R^{n}$ a smooth function. Let us assume
-that $z^{j}\in\R^{n+1}$, is a \emph{regular} point of $\mathcal{C}$, so 
+that $z^{j}\in\R^{n+1}$, is a \emph{regular} point of $\mathcal{C}$, so
 %\begin{displaymath}
 $F\left(z^{j}\right) = 0$, and
   $\mathop{rank}DF\left(z^{j}\right) = n$.
 %\end{displaymath}
 Moreover, let $v^{j}\in\R^{n+1}$ be an unitary vector tangent to the curve
-$\mathcal{C}$ at the point $z^{j}$, $v^{j}\in T_{z^{j}}\mathcal{C}$, so 
+$\mathcal{C}$ at the point $z^{j}$, $v^{j}\in T_{z^{j}}\mathcal{C}$, so
 %\begin{displaymath}
   $\| v^{j}\| = 1$, and
   $DF\left(z^{j}\right) v^{j} = 0$.
@@ -165,7 +165,7 @@ $\mathcal{C}$ at the point $z^{j}$, $v^{j}\in T_{z^{j}}\mathcal{C}$, so
 %\end{displaymath}
 
 Then, it is possible to find a new point on the curve,
-$z^{j+1}\in\mathcal{C}$, and a new unitary tangent vector, to 
+$z^{j+1}\in\mathcal{C}$, and a new unitary tangent vector, to
 $\mathcal{C}$ at $z^{j+1}$, $v^{j+1}\in T_{z^{j+1}}\mathcal{C}$,
 $\left\|v^{j+1}\right\| = 1$. If, on its turn, $z^{j+1}$ is a regular point
 of $\mathcal{C}$, then  one can look for yet another point on
@@ -181,30 +181,30 @@ called \emph{pseudo-arc continuation method} (see~\cite{Kuznetsov2004},
 Chap.~10, Sect.~2, for a complete description). In a nutshell, it consists
 in the three stages discussed below.
 %\begin{enumerate}[label = \emph{\arabic*.}]
-%  \begin{description}  
+%  \begin{description}
   \paragraph{Stage $1$: Prediction.}
     Take $\hat{z}^{j+1} = z^{j} + h_{j}
     v^{j}\in z^{j} + \left\langle v^{j}\right\rangle$ as an approximation
     for another new point $z^{j+1}\in\mathcal{C}$. Here $h_{j} > 0$ is the
-    pseudo-arc length, and can be conveniently adapted at each step. 
+    pseudo-arc length, and can be conveniently adapted at each step.
 %%
   \paragraph{Stage $2$: Correcton.}
  Refine the approximation $\hat{z}^{j+1}$ to
     find $z^{j+1}\in\R^{n+1}$ such that $F\left(z^{j+1}\right) = 0$.
     However, as the system $F(z) = 0$ has $n$ equations and $n+1$ unknowns
     $z_{1}, z_{2},\dots,z_{n},z_{n+1}$, we need to ask for an additional
-    condition: in particular, we shall require that 
+    condition: in particular, we shall require that
     $z^{j+1}\in\hat{z}^{j+1} +\left\langle v^{j}\right\rangle^{\perp}$, i.e., that
     $z^{j+1}$ belongs to
     the hyperplane orthogonal to the vector $v^{j}$ that holds
     $\hat{z}^{j+1}$
-    (see Figure~\ref{fig:pseudo-arc}). The  
+    (see Figure~\ref{fig:pseudo-arc}). The
     corresponding equation con be formulated as
     \begin{align*}
-      \left\langle v^{j}, z^{j+1} - \hat{z}^{j+1}\right\rangle &=  
+      \left\langle v^{j}, z^{j+1} - \hat{z}^{j+1}\right\rangle &=
       \left\langle v^{j}, z^{j+1} - z^{j} - h_{j} v^{j}\right\rangle \\
       &= \left\langle v^{j}, z^{j+1}\right\rangle -
-        \left\langle v^{j}, z^{j}\right\rangle - 
+        \left\langle v^{j}, z^{j}\right\rangle -
         h_{j} \left\langle v^{j}, v^{j}\right\rangle\\
       &=  \left\langle v^{j}, z^{j+1}\right\rangle -
           \left\langle v^{j}, z^{j}\right\rangle - h_{j} = 0,
@@ -221,8 +221,8 @@ in the three stages discussed below.
         \end{split}
     \end{displaymath}
     that can be solved by some iterative method (for example, Newton
-    method) taking as initial approximation. $z^{(0)} = \hat{z}^{j+1}$. 
-  %  
+    method) taking as initial approximation. $z^{(0)} = \hat{z}^{j+1}$.
+  %
 \paragraph{Stage $3$: Tangent vector.} To find the tangent vector to the
 curve at the new point $z^{j+1}\in\mathcal{C}$ found at Stage
 $2$, $v^{j+1}\in  T_{z^{j+1}}\mathcal{C}$, first we solve the
@@ -230,7 +230,7 @@ $(n+1)$-dimensional linear system
     \begin{equation}\label{eq:appended-system}
       \begin{split}
       DF\left(z^{j+1}\right)v &= 0,\\
-      \left\langle v^{j}, v \right\rangle &= 1. 
+      \left\langle v^{j}, v \right\rangle &= 1.
     \end{split}
   \end{equation}
   As it is pointed out in~\cite{Kuznetsov2004}:
@@ -244,7 +244,8 @@ $(n+1)$-dimensional linear system
 \end{enumerate}
 Next, we normalize. If $v^{\ast}\in\R^{n+1}$ denotes the solution
 of~\eqref{eq:appended-system}, we divide by its norm, so $v^{j+1} =
-v^{\ast}/\left\|v^{\ast}\right\|$. This is the tangent vector we look for. 
+v^{\ast}/\left\|v^{\ast}\right\|$. This is the tangent vector we look for.
+\hfill $\diamondsuit$
 %\end{description}
 
 \begin{figure}[!t]
@@ -257,11 +258,35 @@ See~\cite{Kuznetsov2004}, Figure 10.6(b).\label{fig:pseudo-arc}}
 
 Now, the process can be iterated using the output of Stage $3$, the tangent
 vector $v^{j+1}$ to feed Stage $1$ and find a another point close to the
-curve  $\mathcal{C}$ and so on. If for the new computed point curve $C$,
+curve  $\mathcal{C}$, and so on. If for the new computed point curve $C$,
 and so on. If at Stage $2$, $\mathop{Rank} DF\left(z^{k}\right) < n$, for
-the new computed point, $z^{k}\in\mathcal{C}$, then 
+the new computed point, $z^{k}\in\mathcal{C}$, then
  one has to stop the process and analyse for the possible
 appearing of branches (bifurcations).
+
+Neverteless, to start the process we need an initial point on the curve and
+its corresponding tangent vector, $z^{0}\in\mathcal{C}$ and $v^{0}\in
+T_{z^{0}}$. To find $z^{0}$ we can proceed as follows: let us assume that
+we have an approximation for the initial solution, $\hat{z}^{0} =
+\left(\hat{z}^{0}_{1},\dots,\hat{z}^{0}_{n}, \hat{z}^{0}_{n+1}\right)$,
+then we fix one of its components, suppose that we take the last one,
+$\hat{z}^{0}_{n+1}$ and solve the $n$-dimensional system,
+
+\begin{displaymath}
+  \begin{array}{rcl}
+    F_{1}\left(z_{1},\dots, z_{n+1},
+    \hat{z}^{0}_{n+1}\right)&\!\!\!=&\!\!\! 0,\\
+    F_{2}\left(z_{1},\dots, z_{n+1},
+  \hat{z}^{0}_{n+1}\right)&\!\!\!=&\!\!\! 0,\\ 
+  \hdotsfor{3}\\ 
+    F_{n}\left(z_{1},\dots, z_{n+1},
+  \hat{z}^{0}_{n+1}\right)&\!\!\!=&\!\!\! 0, 
+\end{array}
+\end{displaymath}
+by the Newton method, starting with $z_{1} = \hat{z}^{0}_{1},\dots,z_{n} =
+\hat{z}^{0}_{n}$. If the method converges, we have an initial point on the
+curve, $z^{0} = \left(z^{0}_{1},\dots,z^{0}_{n},\hat{z}^{0}_{n+1}\right)$.
+Besides, to 
 
 \bibliographystyle{plain}
 \bibliography{references}
