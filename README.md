@@ -1,6 +1,6 @@
 # equired-circuit-example
 
 ### TODO
-- [ ] Add step control to function `cont.m`  
-- [ ] Translate `continuation_method,tex` to English
+- [x] Add step control to function <tt>cont.m</tt>  
+- [x] Translate <tt>pseudo-arc-step-continuation.tex</tt> to English
 
